@@ -4,6 +4,10 @@
 MobileNet(TensorFlow.js) 모델을 그대로 사용하며, 사진은 서버로 전송되지 않고
 브라우저 안에서만 처리됩니다.
 
+![스크린샷](docs/screenshot.jpg)
+
+<sub>예시 사진: 골든 리트리버 (퍼블릭 도메인, Wikimedia Commons)</sub>
+
 ## 실행
 
 정적 파일이라 빌드가 필요 없습니다.
