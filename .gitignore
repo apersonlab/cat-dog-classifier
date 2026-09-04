@@ -1,3 +1,6 @@
+# Local reference material (not part of the app)
+uploads/
+
 # Dependencies
 node_modules/
 jspm_packages/

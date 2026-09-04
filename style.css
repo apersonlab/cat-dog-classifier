@@ -1,86 +1,162 @@
+/* 개냥 판별 — 손그림 그리드 (A안) */
+
 * { box-sizing: border-box; }
+
+:root {
+  color-scheme: light;
+  --paper: #f5eeda;
+  --ground: #e7ddc6;
+  --ink: #211f1a;
+  --ink-soft: #6b6456;
+  --hair: #ddd0b3;
+  --tomato: #cf4a37;
+  --mustard: #d69327;
+}
 
 body {
   margin: 0;
-  font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
-  background: #f5f5f7;
-  color: #1d1d1f;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 32px 18px;
+  background: var(--ground);
+  color: var(--ink);
+  font-family: "Gothic A1", system-ui, sans-serif;
+  line-height: 1.6;
+  word-break: keep-all;
+  -webkit-font-smoothing: antialiased;
 }
 
-main {
-  max-width: 420px;
-  margin: 40px auto;
-  padding: 24px;
-  background: #fff;
-  border-radius: 16px;
-  box-shadow: 0 2px 16px rgba(0, 0, 0, .08);
+.card {
+  width: 100%;
+  max-width: 460px;
+  padding: 30px 30px 24px;
+  background: var(--paper);
+  border: 1px solid var(--hair);
+  border-radius: 22px;
+  box-shadow: 0 18px 40px -22px rgba(33, 31, 26, .35);
+}
+
+.parade {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 2px;
+  color: var(--ink);
+}
+.parade svg { width: 100%; height: auto; display: block; }
+.parade svg:nth-child(2) { color: var(--tomato); }
+.parade svg:nth-child(4) { color: var(--mustard); }
+
+.brand {
+  font-family: "Gaegu", "Gothic A1", cursive;
+  font-weight: 700;
+  font-size: clamp(30px, 9vw, 42px);
+  line-height: 1;
+  margin: 22px 0 6px;
+  letter-spacing: .01em;
+}
+.brand b { color: var(--tomato); font-weight: 700; }
+
+.sub {
+  margin: 0 0 22px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--ink-soft);
+  min-height: 1.4em;
+}
+
+.drop {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 34px 20px;
   text-align: center;
-}
-
-h1 {
-  font-size: 1.3rem;
-  margin: 0 0 4px;
-}
-
-#status {
-  color: #6e6e73;
-  font-size: .9rem;
-  min-height: 1.2em;
-}
-
-.btn {
-  display: inline-block;
-  padding: 10px 20px;
-  background: #0071e3;
-  color: #fff;
-  border-radius: 980px;
+  background: #faf5e9;
+  border: 2.5px dashed #b7ab8f;
+  border-radius: 20px;
   cursor: pointer;
-  font-size: .95rem;
+  transition: border-color .18s ease, background .18s ease;
+}
+.drop:hover,
+.drop.over { border-color: var(--tomato); background: #fdf9f0; }
+.drop:focus-within { outline: 2px solid var(--tomato); outline-offset: 3px; }
+
+.drop-paw { width: 62px; height: auto; color: var(--ink); }
+.drop-text {
+  font-family: "Gaegu", cursive;
+  font-size: 16px;
+  color: #7a7263;
+}
+.chip {
+  font-weight: 800;
+  font-size: 13px;
+  background: var(--ink);
+  color: var(--paper);
+  padding: 9px 18px;
+  border-radius: 999px;
 }
 
 #preview {
   display: block;
-  max-width: 100%;
-  max-height: 320px;
+  width: 100%;
+  max-height: 300px;
+  object-fit: contain;
   margin: 20px auto 0;
-  border-radius: 12px;
+  border: 3px solid #fff;
+  border-radius: 14px;
+  box-shadow: 0 10px 24px -14px rgba(33, 31, 26, .45);
 }
-
 #preview:not([src]) { display: none; }
 
-#result {
-  margin-top: 16px;
-  font-size: 1.1rem;
-}
+.result { margin-top: 22px; }
 
-.bars {
-  margin-top: 12px;
-  text-align: left;
-  font-size: .85rem;
+.verdict {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  font-family: "Gaegu", cursive;
+  font-weight: 700;
+  font-size: clamp(24px, 7vw, 30px);
+  color: var(--tomato);
+  margin-bottom: 14px;
 }
+.verdict svg { width: 38px; height: auto; color: var(--ink); flex: none; }
 
-.bars > div {
-  position: relative;
-  background: #ececf0;
-  border-radius: 6px;
-  padding: 4px 8px;
-  margin-top: 6px;
+.bar {
+  display: grid;
+  grid-template-columns: 46px 1fr auto;
+  align-items: center;
+  gap: 10px;
+  font-weight: 800;
+  font-size: 13px;
+  margin-top: 9px;
+  font-variant-numeric: tabular-nums;
+}
+.track {
+  height: 16px;
+  border: 2px solid var(--ink);
+  border-radius: 999px;
   overflow: hidden;
+  background: #fff;
+}
+.track i {
+  display: block;
+  height: 100%;
+  width: 0;
+  background: var(--tomato);
+  transition: width .5s ease;
+}
+.bar.cat .track i { background: var(--mustard); }
+
+.foot {
+  margin: 22px 0 0;
+  font-size: 12px;
+  color: #8a806c;
+  text-align: center;
 }
 
-.bars i {
-  position: absolute;
-  left: 0;
-  top: 0;
-  bottom: 0;
-  background: #0071e333;
-  z-index: 0;
-}
-
-.bars span { float: right; }
-
-footer {
-  margin-top: 20px;
-  font-size: .75rem;
-  color: #86868b;
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; }
 }

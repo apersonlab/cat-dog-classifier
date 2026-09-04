@@ -3,23 +3,78 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>개·고양이 판별</title>
+  <title>개냥 판별</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath d='M25 25l12 22M75 25L63 47' stroke='%23211f1a' stroke-width='7' fill='none' stroke-linecap='round'/%3E%3Cpath d='M30 46c-6 18 4 40 20 40s26-22 20-40c-8-16-32-16-40 0z' fill='%23f3ecdc' stroke='%23211f1a' stroke-width='7'/%3E%3Ccircle cx='42' cy='60' r='4'/%3E%3Ccircle cx='58' cy='60' r='4'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gaegu:wght@400;700&family=Gothic+A1:wght@400;500;700;800&display=swap">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <main>
-    <h1>🐶 개·고양이 판별 🐱</h1>
-    <p id="status">준비 중…</p>
+  <svg hidden aria-hidden="true">
+    <defs>
+      <g id="ic-catA">
+        <path d="M20 30 L30 55 M80 30 L70 55" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round"/>
+        <path d="M30 54 C24 70 30 86 50 88 C72 86 76 70 70 54 C64 42 36 42 30 54 Z" fill="none" stroke="currentColor" stroke-width="5" stroke-linejoin="round"/>
+        <path d="M42 40 L42 54 M58 40 L58 54" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>
+        <circle cx="43" cy="66" r="3.2" fill="currentColor"/>
+        <circle cx="57" cy="66" r="3.2" fill="currentColor"/>
+        <path d="M50 72 L50 76 M50 76 C47 80 43 80 41 78 M50 76 C53 80 57 80 59 78" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round"/>
+        <path d="M20 68 L34 70 M20 78 L34 76 M80 68 L66 70 M80 78 L66 76" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+      </g>
+      <g id="ic-catB">
+        <path d="M32 24 C18 40 16 66 24 84 C40 90 60 90 76 84 C84 66 82 40 68 24 C60 34 40 34 32 24 Z" fill="currentColor"/>
+        <circle cx="42" cy="58" r="4" fill="#f5eeda"/>
+        <circle cx="58" cy="58" r="4" fill="#f5eeda"/>
+        <path d="M46 68 C48 71 52 71 54 68" fill="none" stroke="#f5eeda" stroke-width="3" stroke-linecap="round"/>
+      </g>
+      <g id="ic-dogA">
+        <path d="M26 40 C20 30 26 20 30 24 C34 28 34 40 34 44 M74 40 C80 30 74 20 70 24 C66 28 66 40 66 44" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round"/>
+        <path d="M30 42 C26 62 32 82 50 84 C68 82 74 62 70 42 C64 30 36 30 30 42 Z" fill="none" stroke="currentColor" stroke-width="5" stroke-linejoin="round"/>
+        <circle cx="42" cy="58" r="3.4" fill="currentColor"/>
+        <circle cx="58" cy="58" r="3.4" fill="currentColor"/>
+        <path d="M44 68 Q50 74 56 68" fill="none" stroke="currentColor" stroke-width="3.6" stroke-linecap="round"/>
+        <path d="M50 66 L50 70" fill="none" stroke="currentColor" stroke-width="3.6" stroke-linecap="round"/>
+      </g>
+      <g id="ic-dogB">
+        <path d="M30 30 C20 34 20 52 30 58 M70 30 C80 34 80 52 70 58" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round"/>
+        <path d="M32 40 C28 60 34 84 50 86 C66 84 72 60 68 40 C60 30 40 30 32 40 Z" fill="none" stroke="currentColor" stroke-width="5" stroke-linejoin="round"/>
+        <circle cx="43" cy="58" r="3.4" fill="currentColor"/>
+        <circle cx="57" cy="58" r="3.4" fill="currentColor"/>
+        <path d="M50 62 L50 68 Q50 74 44 74 M50 68 Q50 74 56 74" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round"/>
+      </g>
+      <g id="ic-catCurl">
+        <path d="M78 62 C82 40 64 22 44 24 C24 26 12 44 18 62 C22 76 38 82 52 78 C40 74 32 62 38 52 C44 42 60 40 66 50 C70 56 68 66 60 70 C72 72 76 68 78 62 Z" fill="currentColor"/>
+        <path d="M20 40 L12 34 M24 34 L18 26" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>
+      </g>
+    </defs>
+  </svg>
 
-    <label class="btn">
-      사진 선택
-      <input id="file" type="file" accept="image/*" disabled hidden>
+  <main class="card">
+    <div class="parade" aria-hidden="true">
+      <svg viewBox="0 0 100 100"><use href="#ic-catA"/></svg>
+      <svg viewBox="0 0 100 100"><use href="#ic-dogA"/></svg>
+      <svg viewBox="0 0 100 100"><use href="#ic-catB"/></svg>
+      <svg viewBox="0 0 100 100"><use href="#ic-dogB"/></svg>
+      <svg viewBox="0 0 100 100"><use href="#ic-catCurl"/></svg>
+      <svg viewBox="0 0 100 100"><use href="#ic-catA"/></svg>
+    </div>
+
+    <h1 class="brand">개냥 <b>판별</b></h1>
+    <p class="sub" id="status">모델 불러오는 중…</p>
+
+    <label class="drop">
+      <svg class="drop-paw" viewBox="0 0 100 100" aria-hidden="true"><use href="#ic-dogB"/></svg>
+      <span class="drop-text">여기로 사진을 끌어다 놓기</span>
+      <span class="chip">사진 고르기</span>
+      <input id="file" type="file" accept="image/*" hidden disabled>
     </label>
 
-    <img id="preview" alt="">
-    <div id="result"></div>
+    <img id="preview" alt="업로드한 사진">
 
-    <footer>브라우저에서 MobileNet(사전학습 모델)으로 추론합니다. 사진은 서버로 전송되지 않습니다.</footer>
+    <div id="result" class="result" hidden></div>
+
+    <p class="foot">브라우저에서 MobileNet 모델로 바로 추론합니다. 사진은 서버로 전송되지 않아요.</p>
   </main>
 
   <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@4.22.0/dist/tf.min.js"></script>

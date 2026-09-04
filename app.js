@@ -1,4 +1,4 @@
-// 개·고양이 판별 — 브라우저에서 사전학습 MobileNet으로 추론한다.
+// 개냥 판별 — 브라우저에서 사전학습 MobileNet으로 추론한다.
 //
 // MobileNet은 ImageNet 1000개 클래스를 예측한다. 그중:
 //   - 개 품종: 클래스 인덱스 151~268
@@ -12,13 +12,15 @@ const fileInput = document.getElementById('file');
 const preview = document.getElementById('preview');
 const resultEl = document.getElementById('result');
 const statusEl = document.getElementById('status');
+const dropEl = document.querySelector('.drop');
+const dropText = document.querySelector('.drop-text');
 
 let model = null;
 
 async function loadModel() {
-  statusEl.textContent = '모델 로딩 중…';
+  statusEl.textContent = '모델 불러오는 중…';
   model = await mobilenet.load({ version: 2, alpha: 1.0 });
-  statusEl.textContent = '사진을 선택하세요';
+  statusEl.textContent = '사진을 올리면 개인지 고양이인지 알려드려요';
   fileInput.disabled = false;
 }
 
@@ -39,35 +41,47 @@ async function classify(imgEl) {
 }
 
 function render(dog, cat) {
-  const pct = (x) => (x * 100).toFixed(1) + '%';
+  const pct = (x) => Math.round(x * 100) + '%';
+  const low = Math.max(dog, cat) < MIN_CONFIDENCE;
+  const isDog = dog >= cat;
 
-  let verdict;
-  if (Math.max(dog, cat) < MIN_CONFIDENCE) {
-    verdict = '개도 고양이도 잘 안 보여요 🤔';
-  } else if (dog >= cat) {
-    verdict = `개예요 🐶 (${pct(dog)})`;
-  } else {
-    verdict = `고양이예요 🐱 (${pct(cat)})`;
-  }
+  const verdict = low ? '음… 잘 모르겠어요'
+    : isDog ? '개예요!' : '고양이예요!';
+  const icon = low ? '#ic-catCurl' : isDog ? '#ic-dogA' : '#ic-catA';
 
   resultEl.innerHTML =
-    `<strong>${verdict}</strong>` +
-    '<div class="bars">' +
-    `<div>🐶 개 <span>${pct(dog)}</span><i style="width:${pct(dog)}"></i></div>` +
-    `<div>🐱 고양이 <span>${pct(cat)}</span><i style="width:${pct(cat)}"></i></div>` +
-    '</div>';
+    `<div class="verdict"><svg viewBox="0 0 100 100"><use href="${icon}"/></svg>${verdict}</div>` +
+    `<div class="bar"><span>개</span><div class="track"><i style="width:${pct(dog)}"></i></div><b>${pct(dog)}</b></div>` +
+    `<div class="bar cat"><span>고양이</span><div class="track"><i style="width:${pct(cat)}"></i></div><b>${pct(cat)}</b></div>`;
+  resultEl.hidden = false;
 }
 
-fileInput.addEventListener('change', () => {
-  const file = fileInput.files[0];
-  if (!file) return;
-  resultEl.textContent = '';
+function handleFile(file) {
+  if (!file || !file.type.startsWith('image/')) return;
+  resultEl.hidden = true;
   preview.src = URL.createObjectURL(file);
-});
+}
+
+fileInput.addEventListener('change', () => handleFile(fileInput.files[0]));
+
+['dragenter', 'dragover'].forEach((evt) =>
+  dropEl.addEventListener(evt, (e) => {
+    e.preventDefault();
+    dropEl.classList.add('over');
+  })
+);
+['dragleave', 'drop'].forEach((evt) =>
+  dropEl.addEventListener(evt, (e) => {
+    e.preventDefault();
+    dropEl.classList.remove('over');
+  })
+);
+dropEl.addEventListener('drop', (e) => handleFile(e.dataTransfer.files[0]));
 
 preview.addEventListener('load', async () => {
   if (!model) return;
-  statusEl.textContent = '분석 중…';
+  statusEl.textContent = '살펴보는 중…';
+  dropText.textContent = '다른 사진을 끌어다 놓기';
   await classify(preview);
   URL.revokeObjectURL(preview.src);
   statusEl.textContent = '다른 사진도 확인해 보세요';

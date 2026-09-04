@@ -8,7 +8,7 @@ MobileNet(TensorFlow.js) 모델을 그대로 사용하며, 사진은 서버로 �
 
 ![스크린샷](docs/screenshot.jpg)
 
-<sub>예시 사진: 골든 리트리버 (퍼블릭 도메인, Wikimedia Commons)</sub>
+<sub>디자인: 손그림 그리드 (A안). 참고 이미지 — 나카니시 나오코 스타일 손그림 고양이.</sub>
 
 ## 실행
 
