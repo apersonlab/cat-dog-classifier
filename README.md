@@ -1,5 +1,7 @@
 # 개·고양이 판별 서비스
 
+**데모:** https://apersonlab.github.io/cat-dog-classifier/
+
 브라우저에서 이미지를 선택하면 개인지 고양이인지 판별합니다. 사전학습된
 MobileNet(TensorFlow.js) 모델을 그대로 사용하며, 사진은 서버로 전송되지 않고
 브라우저 안에서만 처리됩니다.
